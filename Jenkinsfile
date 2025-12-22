@@ -42,14 +42,11 @@ pipeline {
                 script {
                     echo "Starting Deployment for Tag: ${params.VERSION_TAG}..."
 
-                    // 1. Clean up existing container (if any)
-                    sh "docker rm -f ${CONTAINER_NAME} || true"
-
-                    // 2. Determine configuration based on deployment type
+                    // 1. Determine configuration based on deployment type
                     def envColor = params.APP_COLOR
                     def envVersion = params.VERSION_TAG
 
-                    // 3. Login & Run
+                    // 2. Login & Run
                     docker.withRegistry("http://${NEXUS_REGISTRY}", "${NEXUS_CRED}") {
                         
                         // Pull the specific version (important for Rollback)
